@@ -5,7 +5,7 @@ module.exports = {
   target: 'node',
   mode: 'development',
   entry: './server/index.js',
-  externals: [],
+  externals: [ndeExternals()],
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'build'),
