@@ -5,11 +5,10 @@ a demo for learning react ssr
 ### How to use
 
 ```
-npm install
-npm run dev:server
-npm run dev:start
-npm run dev:client
+yarn
+
+yarn start
 
 ```
 
-then open link `http://localhost:9093/` in browser
+then open link [http://localhost:9093](http://localhost:9093) in browser
