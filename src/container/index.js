@@ -6,7 +6,10 @@ function Index(props) {
   const [count, setCount] = useState(1)
   useEffect(() => {
     // 一步数据首页显示
-    props.getIndexList()
+    if (props.list.length) {
+      // 客户端获取
+      props.getIndexList()
+    }
   }, [])
   return <div>
     <h1>hello, {props.title}! {count}</h1>
@@ -18,6 +21,10 @@ function Index(props) {
       })}
     </ul>
   </div>
+}
+
+Index.loadData = (store) => {
+  return store.dispatch(getIndexList())
 }
 
 export default connect(state =>

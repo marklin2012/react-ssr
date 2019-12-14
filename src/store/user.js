@@ -1,27 +1,27 @@
 // 首页的逻辑
 import axios from 'axios'
 // actionTYpe
-const GET_LIST = 'INDEX/GET_LIST'
+const GET_LIST = 'INDEX/GET_USER_LIST'
 
 // actionCreator
-const changeList = list => ({
+const changeUserInfo = data => ({
   type: GET_LIST,
-  list
+  data
 })
 
-export const getIndexList = server => {
+export const getUserInfo = server => {
   return (dispatch, getState, axiosInstance) => {
-    return axios.get("http://localhost:9090/api/course/list")
+    return axios.get("http://localhost:9090/api/user/info")
       .then(res => {
-        const { list } = res.data
-        console.log('list', list)
-        dispatch(changeList(list))
+        const { data } = res.data
+        console.log('用户信息', data)
+        dispatch(changeUserInfo(data))
       })
   }
 }
 
 const defaultState = {
-  list: []
+  userInfo: {}
 }
 
 export default (state = defaultState, action) => {
@@ -29,7 +29,7 @@ export default (state = defaultState, action) => {
     case GET_LIST:
       const newState = {
         ...state,
-        list: action.list
+        userInfo: action.data
       }
       return newState
     default:

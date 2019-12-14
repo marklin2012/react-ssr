@@ -1,6 +1,20 @@
 let express = require('express')
 const app = express()
 
+app.get('/api/user/info1', (req, res) => {
+  // 支持跨域调用
+  res.header('Access-Control-Allow-Origin', "*")
+  res.header('Access-Control-Allow-Mehods', 'GET,POST,PUT,DELETE')
+  res.header('Content-Type', "application/json;charset=utf-8")
+  res.json({
+    code: 0,
+    data:
+      { name: '开课吧', best: "大圣" },
+
+
+  })
+})
+
 app.get('/api/course/list', (req, res) => {
   // 支持跨域调用
   res.header('Access-Control-Allow-Origin', "*")
