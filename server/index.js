@@ -12,6 +12,20 @@ const store = getServerStore()
 const app = express()
 app.use(express.static('public'))
 
+/**
+ * 处理所有的网络请求，捕捉错误，避免promise.all 的时候出错就 catch
+ * @param {array} promises 网络请求列表
+ */
+function handlePromises(promises) {
+  return promises.map(promise =>
+    promise.then(res => {
+      return { ok: true, data: res }
+    }).catch(err => {
+      return { ok: false, data: err }
+    })
+  )
+}
+
 app.get('*', (req, res) => {
   // 获取 根据路由渲染出的组建，并且拿到 loadData 方法，获取数据
 
@@ -27,7 +41,7 @@ app.get('*', (req, res) => {
     }
   })
   // 等待所有网络请求结束再渲染
-  Promise.all(promises).then(() => {
+  Promise.all(handlePromises(promises)).then(() => {
     // 把react组件，解析成html
     const content = renderToString(
       <Provider store={store}>
