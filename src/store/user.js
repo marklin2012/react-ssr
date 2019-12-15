@@ -1,5 +1,4 @@
 // 首页的逻辑
-import axios from 'axios'
 // actionTYpe
 const GET_LIST = 'INDEX/GET_USER_LIST'
 
@@ -11,7 +10,7 @@ const changeUserInfo = data => ({
 
 export const getUserInfo = server => {
   return (dispatch, getState, axiosInstance) => {
-    return axios.get("http://localhost:9090/api/user/info")
+    return axiosInstance.get("/api/user/info")
       .then(res => {
         const { data } = res.data
         // console.log('用户信息', data)
