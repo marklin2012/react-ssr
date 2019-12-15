@@ -7,6 +7,7 @@ import { StaticRouter, matchPath, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { getServerStore } from '../src/store/store'
 import Header from '../src/component/Header'
+import proxy from 'express-http-proxy'
 
 const store = getServerStore()
 const app = express()
@@ -26,9 +27,14 @@ function handlePromises(promises) {
   )
 }
 
+app.use('/api', proxy('http://localhost:9090', {
+  proxyReqPathResolver: (req) => {
+    return '/api' + req.url
+  }
+}))
+
 app.get('*', (req, res) => {
   // 获取 根据路由渲染出的组建，并且拿到 loadData 方法，获取数据
-
   // 存储所有网络请求
   const promises = []
   routes.some(route => {
