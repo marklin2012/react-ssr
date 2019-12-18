@@ -16,7 +16,7 @@ const store = createStore(reducer, applyMiddleware(thunk))
 
 
 const serverAxios = axios.create({
-  baseURL: 'http://localhost:9090'
+  baseURL: 'http://localhost:9093'
 })
 
 const clientAxios = axios.create({
