@@ -11,20 +11,14 @@ yarn start
 
 ```
 
-if you want to test mock, you should start another tab in zsh/bash to use code: 
-
-```
-node mock.js
-```
-
-then open link [http://localhost:9093](http://localhost:9093) in browser
+Mock server will start at port 9090，then open link [http://localhost:9093](http://localhost:9093) in browser
 
 ## 同构
 
-说到 SSR ，很多人第一反应是 “服务端渲染”， 但其实我们现在更倾向于称之为 ”同构“，
+说到 SSR ，很多人第一反应是 “服务端渲染”， 但其实我们现在更倾向于称之为 ”同构“，同构包含了客户端渲染和服务端渲染同时工作
 
 ### 客户端渲染
-客户端渲染模式下，页面加载通过服务端把渲染的 HTML 静态页面中展示内容，然后加载执行文件中的 js 代码（例如 react），再通过 根据 js 运行结果，生成相应 DOM并完成事件绑定，最后渲染给用户
+客户端渲染模式下，页面加载通过服务端渲染的 HTML 静态页面展示内容，然后加载执行文件中的 js 代码（例如 react），再根据 js 运行结果，生成相应 DOM 并完成事件绑定，最后渲染给用户
 
 #### 优点：
   1. 网络传输数据量小，减少服务器压力，
