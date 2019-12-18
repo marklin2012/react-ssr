@@ -3,7 +3,7 @@ import React from 'react'
 import { renderToString } from 'react-dom/server'
 import express from 'express'
 import routes from '../src/App'
-import { StaticRouter, matchPath, Route } from 'react-router-dom'
+import { StaticRouter, matchPath, Route, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { getServerStore } from '../src/store/store'
 import Header from '../src/component/Header'
@@ -37,6 +37,7 @@ app.get('*', (req, res) => {
   // 获取 根据路由渲染出的组建，并且拿到 loadData 方法，获取数据
   // 存储所有网络请求
   const promises = []
+  console.log(routes)
   routes.some(route => {
     const match = matchPath(req.path, route)
     if (match) {
@@ -48,15 +49,31 @@ app.get('*', (req, res) => {
   })
   // 等待所有网络请求结束再渲染
   Promise.all(handlePromises(promises)).then(() => {
+    const context = {}
     // 把react组件，解析成html
     const content = renderToString(
       <Provider store={store}>
-        <StaticRouter location={req.url}>
+        <StaticRouter location={req.url} context={context}>
           <Header></Header>
-          {routes.map(route => <Route {...route}></Route>)}
+          <Switch>
+            {routes.map(route => {
+              console.log('route:', route)
+              return <Route {...route}></Route>
+            })}
+          </Switch>
         </StaticRouter>
       </Provider>
     )
+    console.log('context', context)
+    if (context.statuscode) {
+      // 状态切换和页面跳转
+      res.status(context.statuscode)
+
+    }
+
+    if (context.action === "REPLACE") {
+      res.redirect(301, context.url)
+    }
     res.send(`
     <html>
       <head>
@@ -71,7 +88,8 @@ app.get('*', (req, res) => {
         <script src='/bundle.js'></script>
       </body>
     </html>`)
-  }).catch(() => {
+  }).catch((err) => {
+    console.log('err:', err)
     res.send('报错页面: 500')
   })
 

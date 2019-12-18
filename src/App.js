@@ -5,6 +5,7 @@ import Index from './container/'
 import About from './container/About'
 import User from './container/User'
 import './App.css'
+import NotFound from './container/NotFound'
 
 // export default (
 //   <div>
@@ -19,7 +20,7 @@ export default [
     path: "/",
     component: Index,
     // loadData: Index.loadData,
-    // exact: true,
+    exact: true,
     key: "index"
   },
   {
@@ -33,5 +34,9 @@ export default [
     component: User,
     exact: true,
     key: "user"
+  },
+  {
+    component: NotFound,
+    key: 'xxx'
   },
 ]
