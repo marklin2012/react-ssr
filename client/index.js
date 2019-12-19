@@ -12,7 +12,6 @@ const Page = (<Provider store={getClientStore()}>
     <Header></Header>
     <Switch>
       {routes.map(route => {
-        console.log('route:', route)
         return <Route {...route}></Route>
       })}
     </Switch>

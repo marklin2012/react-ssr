@@ -57,7 +57,6 @@ app.get('*', (req, res) => {
           <Header></Header>
           <Switch>
             {routes.map(route => {
-              console.log('route:', route)
               return <Route {...route}></Route>
             })}
           </Switch>
@@ -89,7 +88,6 @@ app.get('*', (req, res) => {
       </body>
     </html>`)
   }).catch((err) => {
-    console.log('err:', err)
     res.send('报错页面: 500')
   })
 
