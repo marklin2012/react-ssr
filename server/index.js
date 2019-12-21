@@ -8,6 +8,8 @@ import { Provider } from 'react-redux'
 import { getServerStore } from '../src/store/store'
 import Header from '../src/component/Header'
 import proxy from 'express-http-proxy'
+import path from 'path'
+import fs from 'fs'
 
 const store = getServerStore()
 const app = express()
@@ -33,7 +35,21 @@ app.use('/api', proxy('http://localhost:9090', {
   }
 }))
 
+function csrRender(res) {
+  // 读取csr文件返回
+  const filename = path.resolve(process.cwd(), 'public/index.csr.html')
+  const html = fs.readFileSync(filename, 'utf-8')
+  return res.send(html)
+}
+
 app.get('*', (req, res) => {
+
+  if (req.query._mode === 'csr') {
+    console.log('url参数开启 csr 降级')
+    return csrRender(res)
+  }
+  // 配置开关 开启 csr
+
   // 获取 根据路由渲染出的组建，并且拿到 loadData 方法，获取数据
   // 存储所有网络请求
   const promises = []

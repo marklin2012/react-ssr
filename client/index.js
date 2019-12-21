@@ -17,4 +17,12 @@ const Page = (<Provider store={getClientStore()}>
     </Switch>
   </BrowserRouter >
 </Provider>)
-ReactDom.hydrate(Page, document.getElementById('root'))
+
+if (window && window.__context) {
+  // ssr
+  ReactDom.hydrate(Page, document.getElementById('root'))
+
+} else {
+  ReactDom.render(Page, document.getElementById('root'))
+
+}
