@@ -12,8 +12,8 @@ function Index(props) {
     // if (props.staticContext) {
     //   props.staticContext.css.push(styles._getCss())
     // }
-    // 一步数据首页显示
-    if (props.list.length) {
+    // 异步数据首页显示
+    if (!props.list.length) {
       // 客户端获取
       console.log('客户端获取 getIndexList')
       props.getIndexList()
