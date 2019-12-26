@@ -2,18 +2,20 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { getIndexList } from '../store/index'
 import styles from './index.css'
+import withStyle from '../withStyle'
 
 // console.log('css', styles._getCss())
 
 function Index(props) {
   const [count, setCount] = useState(1)
   useEffect(() => {
-    if (props.staticContext) {
-      props.staticContext.css.push(styles._getCss())
-    }
+    // if (props.staticContext) {
+    //   props.staticContext.css.push(styles._getCss())
+    // }
     // 一步数据首页显示
     if (props.list.length) {
       // 客户端获取
+      console.log('客户端获取 getIndexList')
       props.getIndexList()
     }
   }, [])
@@ -36,4 +38,4 @@ Index.loadData = (store) => {
 export default connect(state =>
   ({ list: state.index.list }),
   { getIndexList }
-)(Index)
+)(withStyle(Index, styles))
